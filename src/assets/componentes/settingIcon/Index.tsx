@@ -3,7 +3,7 @@ import { LuSettings } from "react-icons/lu";
 function SettingIcon() {
   return (
     <div>
-      <LuSettings size={18} />
+      <LuSettings size={14} />
     </div>
   )
 }

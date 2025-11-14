@@ -3,7 +3,7 @@ import { LuCircleUserRound } from "react-icons/lu";
 function SignInIcon() {
   return (
     <div>
-        <LuCircleUserRound size={18} />
+        <LuCircleUserRound size={14} />
     </div>
   )
 }
