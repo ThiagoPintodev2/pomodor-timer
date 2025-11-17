@@ -4,34 +4,47 @@ import Btn from "../../assets/componentes/button/Index";
 import { ButtonGroup } from "../ui/button-group";
 import BtnAnimation from "@/assets/componentes/btnAnimation/Index";
 
-
 function Timer() {
   const pomodoroMinutes = 25 * 60 * 1000;
   const shortMinutes = 5 * 60 * 1000;
   const restMinutes = 20 * 60 * 1000;
+
   const [category, setCategory] = useState<"short" | "focus" | "rest">("focus");
   const countdownRef = useRef<Countdown | null>(null);
-  const [ buttonValue, setButtonValue ] = useState<string>('START')
+  const [buttonValue, setButtonValue] = useState<string>("START");
+  const [targetDate, setTargetDate] = useState<number>(
+    Date.now() + pomodoroMinutes
+  );
+
+  const getDuration = (cat: "short" | "focus" | "rest") => {
+    if (cat === "focus") return pomodoroMinutes;
+    if (cat === "short") return shortMinutes;
+    return restMinutes;
+  };
+
+  const handleCategoryChange = (newCategory: "short" | "focus" | "rest") => {
+    setCategory(newCategory);
+    setButtonValue("START");
+    setTargetDate(Date.now() + getDuration(newCategory));
+    countdownRef.current?.stop();
+  };
 
   const handleButtonStart = () => {
-    if(buttonValue === 'START') {
-      setButtonValue('PAUSE')
-      countdownRef.current?.start()
-    } else {
-      setButtonValue('START')
-      countdownRef.current?.stop()
+    const countdown = countdownRef.current;
+    if (!countdown) return;
+
+    if (buttonValue === "START") {
+      if (countdown.isStopped() || countdown.isCompleted()) {
+        setTargetDate(Date.now() + getDuration(category));
       }
-  }
+      setButtonValue("PAUSE");
+      countdown.start();
+    } else {
+      setButtonValue("START");
+      countdown.pause();
+    }
+  };
 
-  // Define o tempo atual com base na categoria
-  const currentTime =
-    category === "focus"
-      ? pomodoroMinutes
-      : category === "short"
-      ? shortMinutes
-      : restMinutes;
-
-  // 🔹 renderer personalizado — mostra apenas minutos e segundos
   const renderer = ({ minutes, seconds, completed }: CountdownRenderProps) => {
     if (completed) {
       return <span>00:00</span>;
@@ -51,17 +64,17 @@ function Timer() {
         <Btn
           className={"text-[1.6rem] p-[1.5rem] cursor-pointer"}
           value={"Pomodoro"}
-          onClick={() => setCategory("focus")}
+          onClick={() => handleCategoryChange("focus")}
         />
         <Btn
           className={"text-[1.6rem] p-[1.5rem] cursor-pointer"}
           value={"Pausa curta"}
-          onClick={() => setCategory("short")}
+          onClick={() => handleCategoryChange("short")}
         />
         <Btn
           className={"text-[1.6rem] p-[1.5rem] cursor-pointer"}
           value={"Pausa longa"}
-          onClick={() => setCategory("rest")}
+          onClick={() => handleCategoryChange("rest")}
         />
       </ButtonGroup>
 
@@ -69,16 +82,16 @@ function Timer() {
         <Countdown
           ref={countdownRef}
           autoStart={false}
-          date={Date.now() + currentTime}
-          renderer={renderer} 
-          controlled={false}
-          
+          date={targetDate}
+          renderer={renderer}
         />
       </div>
 
       <div className="flex justify-center">
         <BtnAnimation
-          className={"w-[16rem] h-[5rem] text-5xl bg-[#FFF] hover:bg-none text-[#ba4949] cursor-pointer"}
+          className={
+            "w-[16rem] h-[5rem] text-5xl bg-[#FFF] hover:bg-none text-[#ba4949] cursor-pointer"
+          }
           value={buttonValue}
           onClick={handleButtonStart}
         />
@@ -86,4 +99,5 @@ function Timer() {
     </div>
   );
 }
-export default Timer
+
+export default Timer;
