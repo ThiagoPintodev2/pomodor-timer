@@ -1,12 +1,21 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Countdown, { type CountdownRenderProps } from "react-countdown";
 import Btn from "../../assets/componentes/button/Index";
 import { ButtonGroup } from "../ui/button-group";
 import BtnAnimation from "@/assets/componentes/btnAnimation/Index";
+import { ThemePomodoroContext } from "@/contexts/ThemePomodoro/ThemePomodoro";
 
 
 function Timer() {
+
+  //const PomodoroTime = useContext(ThemePomodoroContext) 
+
   const pomodoroMinutes = 25 * 60 * 1000;
+
+  // const testeMinutes = () => {
+  //   PomodoroTime * 60 * 1000
+  // }
+
   const shortMinutes = 5 * 60 * 1000;
   const restMinutes = 20 * 60 * 1000;
   const [category, setCategory] = useState<"short" | "focus" | "rest">("focus");

@@ -3,8 +3,17 @@ import DefaultTitle from "../defaultTitle/Index";
 import SectionTitle from "../sectionTitle";
 import { CgTimer } from "react-icons/cg";
 import SwitchSection from "../swicthSection/Index";
+import { useContext, useState } from "react";
+import { ThemePomodoroContext } from "@/contexts/ThemePomodoro/ThemePomodoro";
 
 function TimerSection() {
+  const timerValue = useContext(ThemePomodoroContext);
+
+  const handleChangeValueTimer = (e: string) => {
+    const teste = parseFloat(e);
+    timerValue?.setValueTime(teste);
+  };
+
   return (
     <div>
       <div className="flex flex-col m-auto px-[1.5rem] pb-[1.5rem] w-[41rem] bg-[#FFF]">
@@ -19,6 +28,7 @@ function TimerSection() {
             }
             label={"Pomodoro"}
             placeholder={"25"}
+            onChange={(e) => handleChangeValueTimer(e.target.value)}
           />
           <InputConfiguration
             className={
