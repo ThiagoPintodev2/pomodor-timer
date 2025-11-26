@@ -1,6 +1,7 @@
 import SettingIcon from "../settingIcon/Index";
 import SignInIcon from "../signInIcon/Index";
 import WindowSetting from "../windowSetting/Index";
+import { NavLink, Outlet } from "react-router"
 import {
   Dialog,
   DialogContent,
@@ -11,16 +12,17 @@ import {
 import Btn from "../button/Index";
 
 function Header() {
-
+  
   return (
     <>
-      <div className="flex text-[#FFF] gap-[1rem] mt-[1rem] items-center">
+      <div
+        className="flex text-[#FFF] gap-[1rem] mt-[1rem] items-center"
+      >
         <h1 className="mr-[10rem] text-[2rem] font-bold">ThiagoPomo</h1>
-
         <Dialog>
           <DialogTrigger
             className={
-              "flex items-center cursor-pointer justify-center gap-3 bg-[#c66a6a] text-[1.7rem] w-[10rem] h-[4rem] rounded-[0.5rem] border  shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+              "flex items-center hover:bg-white/20 cursor-pointer justify-center gap-3 bg-[rgba(255,255,255,0.2)] text-[1.7rem] w-[10rem] h-[4rem] rounded-[0.5rem] border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
             }
           >
             {<SettingIcon />}
@@ -41,13 +43,14 @@ function Header() {
         </Dialog>
         <Btn
           className={
-            "flex items-center justify-center gap-3 bg-[#C66A6A] text-[1.7rem] w-[10rem] h-[4rem] rounded-[0.5rem] font-normal cursor-pointer"
+            "flex items-center justify-center gap-3 bg-[rgba(255,255,255,0.2)] text-[1.7rem] w-[10rem] h-[4rem] rounded-[0.5rem] font-normal cursor-pointer"
           }
           value={"SIGN IN"}
           img={<SignInIcon />}
         />
       </div>
       <div className="w-[58rem] bg-gray-200 h-[0.1rem] mt-[2rem]"></div>
+      <Outlet />
     </>
   );
 }

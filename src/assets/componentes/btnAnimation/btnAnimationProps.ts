@@ -1,5 +1,5 @@
-export type BtnAnimationProps = {
-    className: string,
-    value: string,
-    onClick: React.MouseEventHandler
-}
+import React from "react";
+
+export type BtnAnimationProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    value?: string;
+};

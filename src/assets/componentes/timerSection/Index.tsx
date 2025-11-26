@@ -3,15 +3,34 @@ import DefaultTitle from "../defaultTitle/Index";
 import SectionTitle from "../sectionTitle";
 import { CgTimer } from "react-icons/cg";
 import SwitchSection from "../swicthSection/Index";
-import { useContext, useState } from "react";
-import { ThemePomodoroContext } from "@/contexts/ThemePomodoro/ThemePomodoro";
+import { useContext } from "react";
+import { PomodoroContext } from "@/contexts/pomodoroContext/PomodoroContext";
 
 function TimerSection() {
-  const timerValue = useContext(ThemePomodoroContext);
+  const timerValue = useContext(PomodoroContext);
 
-  const handleChangeValueTimer = (e: string) => {
-    const teste = parseFloat(e);
-    timerValue?.setValueTime(teste);
+  const handleChangeValueTimerPomodoro = (e: string) => {
+    const timeValueInputPomodoro = parseFloat(e);
+    timerValue?.setValuesInputTimer({
+      ...timerValue.valuesInputTimer,
+      pomodoroInput: timeValueInputPomodoro,
+    });
+  };
+
+  const handleChangeValueTimerShortBreak = (e: string) => {
+    const timeValueInputShortBreak = parseFloat(e);
+    timerValue?.setValuesInputTimer({
+      ...timerValue.valuesInputTimer,
+      shortBreakInput: timeValueInputShortBreak,
+    });
+  };
+
+  const handleChangeValueTimerLongBreak = (e: string) => {
+    const timeValueInputLongBreak = parseFloat(e);
+    timerValue?.setValuesInputTimer({
+      ...timerValue.valuesInputTimer,
+      longBreakInput: timeValueInputLongBreak,
+    });
   };
 
   return (
@@ -28,21 +47,23 @@ function TimerSection() {
             }
             label={"Pomodoro"}
             placeholder={"25"}
-            onChange={(e) => handleChangeValueTimer(e.target.value)}
+            onChange={(e) => handleChangeValueTimerPomodoro(e.target.value)}
           />
           <InputConfiguration
             className={
               "w-[9rem] h-[3.5rem] placeholder:text-[1.6rem] bg-gray-200"
             }
-            label={"Short breake"}
+            label={"Short break"}
             placeholder={"5"}
+            onChange={(e) => handleChangeValueTimerShortBreak(e.target.value)}
           />
           <InputConfiguration
             className={
               "w-[9rem] h-[3.5rem] placeholder:text-[1.6rem] bg-gray-200"
             }
-            label={"Long breack"}
+            label={"Long break"}
             placeholder={"15"}
+            onChange={(e) => handleChangeValueTimerLongBreak(e.target.value)}
           />
         </div>
         <SwitchSection />
