@@ -18,11 +18,40 @@ import { PomodoroContext } from "@/contexts/pomodoroContext/PomodoroContext";
 function Header() {
   const pomodoroContext = useContext(PomodoroContext);
   const [open, setOpen] = useState(false);
-
+  let totalMinutos = 0;
+  switch (pomodoroContext?.titleTimer) {
+    case "Pomodoro":
+      totalMinutos = pomodoroContext?.valuesInputTimer.pomodoroInput * 60 || 0;
+      break;
+    case "Short break":
+      totalMinutos =
+        pomodoroContext?.valuesInputTimer.shortBreakInput * 60 || 0;
+      break;
+    case "Long break":
+      totalMinutos = pomodoroContext?.valuesInputTimer.longBreakInput * 60 || 0;
+      break;
+  }
   useEffect(() => {
-    const timer = setTimeout(() => pomodoroContext?.setProgress(pomodoroContext.progress), 500);
+    const timer = setTimeout(
+      () => pomodoroContext?.setProgress(pomodoroContext.progress),
+      500
+    );
     return () => clearTimeout(timer);
   }, []);
+
+  const totalSeconds = totalMinutos;
+  const remainingSeconds =
+    pomodoroContext?.progress ?? totalSeconds;
+  const progressPercent =
+    totalSeconds > 0
+      ? Math.min(
+          100,
+          Math.max(
+            0,
+            ((totalSeconds - remainingSeconds) / totalSeconds) * 100
+          )
+        )
+      : 0;
 
   return (
     <>
@@ -77,7 +106,11 @@ function Header() {
         </NavLink>
       </div>
       <div className="flex items-center w-[58rem] bg-gray-200 h-[0.1rem] mt-[2rem]">
-        <Progress value={pomodoroContext?.progress} className="w-[100%]" />
+        <Progress
+          value={progressPercent}
+          max={100}
+          className="w-[100%] "
+        />
       </div>
       <Outlet />
     </>

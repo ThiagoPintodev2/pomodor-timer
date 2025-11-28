@@ -88,7 +88,9 @@ function Timer() {
     countdownRef.current?.stop();
     setCategory(newCategory);
     setButtonValue("START");
-    setTargetDate(Date.now() + getDuration(newCategory));
+    const duration = getDuration(newCategory);
+    setTargetDate(Date.now() + duration);
+    pomodoroContext?.setProgress(duration / 1000);
     pomodoroContext?.setTitleTimer(newCategory);
   };
 
@@ -121,7 +123,9 @@ function Timer() {
   };
 
   useEffect(() => {
-    setTargetDate(Date.now() + getDuration(category));
+    const duration = getDuration(category);
+    setTargetDate(Date.now() + duration);
+    pomodoroContext?.setProgress(duration / 1000);
   }, [pomodoroMinutes, shortMinutes, restMinutes]);
 
   return (
