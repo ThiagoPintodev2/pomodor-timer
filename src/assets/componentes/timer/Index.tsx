@@ -10,6 +10,7 @@ import type { Count } from "../countPomodoro/countPomodoro";
 import CountShortBreak from "../countShortBreak";
 import CountLongBreak from "../countLongBreak/Index";
 
+
 function Timer() {
   const pomodoroContext = useContext(PomodoroContext);
   const [category, setCategory] = useState<
@@ -39,7 +40,6 @@ function Timer() {
     if (cat === "Short break") return shortMinutes;
     return restMinutes;
   };
-
   type Category = "Pomodoro" | "Short break" | "Long break";
 
   const handleCategoryChange = ({
@@ -51,7 +51,7 @@ function Timer() {
   }) => {
     let newCategory: "Short break" | "Pomodoro" | "Long break";
 
-    if (nextCategory && category === "Pomodoro" && isCompleted === true) {
+    if (nextCategory) {
       newCategory = nextCategory;
     } else if (category === "Pomodoro" && isCompleted === true) {
       newCategory = "Short break";
@@ -68,7 +68,11 @@ function Timer() {
     } else {
       newCategory = "Pomodoro";
     }
-    if (category === "Pomodoro" && count.countPomodoro === pomodoroContext?.valuesInputTimer.valueIntervalInput) {
+    if (
+      category === "Pomodoro" &&
+      count.countPomodoro ===
+        pomodoroContext?.valuesInputTimer.valueIntervalInput
+    ) {
       newCategory = "Long break";
       setCount({
         ...count,
@@ -91,7 +95,6 @@ function Timer() {
   const handleButtonStart = () => {
     const countdown = countdownRef.current;
     if (!countdown) return;
-
     if (buttonValue === "START") {
       if (countdown.isStopped() || countdown.isCompleted()) {
         setTargetDate(Date.now() + getDuration(category));
@@ -107,13 +110,14 @@ function Timer() {
   const renderer = ({ minutes, seconds, completed }: CountdownRenderProps) => {
     if (completed) {
       return <span>00:00</span>;
-    }
-
-    return (
+    } 
+    pomodoroContext?.setProgress((minutes * 60) + seconds)
+      return (
       <span>
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </span>
     );
+    
   };
 
   useEffect(() => {
@@ -163,7 +167,6 @@ function Timer() {
             }}
           />
         </ButtonGroup>
-
         <div className="text-[12rem] text-center font-bold font text-[#FFF]">
           <Countdown
             onComplete={() =>

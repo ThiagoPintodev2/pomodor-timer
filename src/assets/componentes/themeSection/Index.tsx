@@ -3,7 +3,6 @@ import DefaultTitle from "../defaultTitle/Index";
 import DropdownMenuOption from "../dropdownMenuOpiton/Index";
 import SectionTitle from "../sectionTitle";
 import { IoColorPalette } from "react-icons/io5";
-//import { FaCheck } from "react-icons/fa6";
 import PomodoroThemeSection from "../pomodoroThemeSection/Index";
 import LongbreakThemeSection from "../longBreakThemeSection/Index";
 import ShortBreakTheme from "../shortBreakThemeSection/Index";

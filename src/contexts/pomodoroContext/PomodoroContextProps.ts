@@ -4,14 +4,21 @@ export interface ThemeInterface {
   longBreak: string;
 }
 
+export interface timeProgressBar {
+  minutes: number,
+  seconds: number
+}
+
 export interface ValueInput {
-  valueIntervalInput: number
+  valueIntervalInput: number;
   pomodoroInput: number;
   shortBreakInput: number;
   longBreakInput: number;
 }
 
 export type PomodoroContextProps = {
+  progress: number;
+  setProgress: (n: number) => void;
   themes: ThemeInterface;
   setThemes: (el: ThemeInterface) => void;
   titleTimer: string;

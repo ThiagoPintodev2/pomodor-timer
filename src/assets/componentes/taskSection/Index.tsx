@@ -24,7 +24,7 @@ function TaskSection() {
               <BsFillInfoCircleFill size={15} className="text-gray-400" />;
             </TooltipTrigger>
             <TooltipContent>
-              <p className="text-[1rem]">Select your Auto Check Tasks</p>
+              <div className="text-[1rem]">Select your Auto Check Tasks</div>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -38,7 +38,7 @@ function TaskSection() {
               <BsFillInfoCircleFill size={15} className="text-gray-400" />;
             </TooltipTrigger>
             <TooltipContent>
-              <p className="text-[1rem]">Select your Check to Bottom</p>
+              <div className="text-[1rem]">Select your Check to Bottom</div>
             </TooltipContent>
           </Tooltip>
         </div>

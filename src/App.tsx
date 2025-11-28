@@ -11,6 +11,7 @@ import LoginArea from "./pages/loginArea/Index";
 
 function App() {
   const [titleTimer, setTitleTimer] = useState<string>("Pomodoro");
+  const [progress, setProgress] = useState<number>(0);
   const [themes, setThemes] = useState<ThemeInterface>({
     pomodoro: "#4a9ef2",
     shortBreak: "green",
@@ -18,9 +19,9 @@ function App() {
   });
   const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>({
     valueIntervalInput: 2,
-    pomodoroInput: 0.04,
-    shortBreakInput: 0.04,
-    longBreakInput: 0.04,
+    pomodoroInput: 0.1,
+    shortBreakInput: 0.1,
+    longBreakInput: 0.1,
   });
 
   return (
@@ -39,6 +40,8 @@ function App() {
         <BrowserRouter>
           <PomodoroContext.Provider
             value={{
+              progress,
+              setProgress,
               themes,
               setThemes,
               titleTimer,

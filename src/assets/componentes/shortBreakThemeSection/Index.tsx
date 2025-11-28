@@ -51,12 +51,15 @@ function ShortBreakTheme() {
   return (
     <div className="flex gap-4">
       <Dialog>
-        <DialogTrigger>
-          <Btn
-            className="w-[3.5rem] h-[3.5rem] border rounded-[50%] cursor-pointer"
-            value={""}
-            style={{ backgroundColor: pomodoroContext?.themes.shortBreak }}
-          />
+        <DialogTrigger asChild>
+          <div>
+            {" "}
+            <Btn
+              className="w-[3.5rem] h-[3.5rem] border rounded-[50%] cursor-pointer"
+              value={""}
+              style={{ backgroundColor: pomodoroContext?.themes.shortBreak }}
+            />
+          </div>
         </DialogTrigger>
         <DialogContent
           showCloseButton={false}
@@ -66,20 +69,26 @@ function ShortBreakTheme() {
             <DialogTitle className="text-center mt-[-1rem] mb-[1rem] text-[1.5rem]">
               Pick a color for short Break
             </DialogTitle>
-            <DialogDescription className="grid grid-flow-col grid-rows-2 gap-3">
-              {allColorThemes.map((item) => (
-                <Btn
-                  className="w-[4.5rem] h-[4.5rem] border rounded-[50%] cursor-pointer"
-                  value={""}
-                  style={{ backgroundColor: item.color }}
-                  onClick={() =>
-                    pomodoroContext?.setThemes({
-                      ...pomodoroContext.themes,
-                      shortBreak: item.color,
-                    })
-                  }
-                />
-              ))}
+            <DialogDescription
+              asChild
+              className="grid grid-flow-col grid-rows-2 gap-3"
+            >
+              <div>
+                {allColorThemes.map((item) => (
+                  <Btn
+                    key={item.id}
+                    className="w-[4.5rem] h-[4.5rem] border rounded-[50%] cursor-pointer"
+                    value={""}
+                    style={{ backgroundColor: item.color }}
+                    onClick={() =>
+                      pomodoroContext?.setThemes({
+                        ...pomodoroContext.themes,
+                        shortBreak: item.color,
+                      })
+                    }
+                  />
+                ))}
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
