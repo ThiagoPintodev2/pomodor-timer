@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FcGoogle } from "react-icons/fc";
 import { NavLink } from "react-router";
 import { LuArrowLeftFromLine } from "react-icons/lu";
 
@@ -15,23 +14,21 @@ function LoginArea() {
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] items-center justify-center gap-6">
       <h1 className="text-[2rem] font-bold text-white">ThiagoPomoFocus</h1>
-      <p className="text-[1.3rem] font-medium text-white">Enter your Account</p>
-      <Card className="flex flex-col justify-around w-[32rem] h-[32vh]">
+      <Card className="flex flex-col justify-around w-[36rem] h-[36rem] bg-white">
         <CardHeader>
-          <Button
-            variant="outline"
-            className="w-full h-[4vh] text-[1.1rem] text-gray-500 cursor-pointer"
-          >
-            <FcGoogle size={14} />
-            Login with Google
-          </Button>
+          <div className="text-[2.8rem] font-medium text-center">
+            Enter your Account
+          </div>
         </CardHeader>
         <CardContent>
           <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label className="text-[1.4rem]" htmlFor="email">
+                  Email
+                </Label>
                 <Input
+                  className="h-[4rem]"
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -40,15 +37,22 @@ function LoginArea() {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label className="text-[1.4rem]" htmlFor="password">
+                    Password
+                  </Label>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-[1.4rem]"
                   >
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  className="h-[4rem]"
+                  id="password"
+                  type="password"
+                  required
+                />
               </div>
             </div>
           </form>
@@ -56,7 +60,7 @@ function LoginArea() {
         <CardFooter className="flex-col gap-2">
           <Button
             type="submit"
-            className="w-full h-[3.8vh] bg-gray-600 text-[1.3rem] cursor-pointer"
+            className="w-full h-[4.5rem] border text-[1.6rem] text-white cursor-pointer hover:bg-gray-200"
           >
             Login
           </Button>
@@ -68,6 +72,11 @@ function LoginArea() {
           <p>voltar</p>
         </NavLink>
       </div>
+      <NavLink to="/createaccount">
+        <div className="text-[1.2rem] font-medium mt-[1rem] underline cursor-pointer">
+          Create your account
+        </div>
+      </NavLink>
     </div>
   );
 }

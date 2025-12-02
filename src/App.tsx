@@ -8,6 +8,7 @@ import type {
   ValueInput,
 } from "./contexts/pomodoroContext/PomodoroContextProps";
 import LoginArea from "./pages/loginArea/Index";
+import CreateAccount from "./pages/createAccount/Index";
 
 function App() {
   const [titleTimer, setTitleTimer] = useState<string>("Pomodoro");
@@ -55,6 +56,7 @@ function App() {
                 <Route index element={<Timer />} />
               </Route>
               <Route path="/signin" element={<LoginArea />} />
+              <Route path="/createaccount" element={<CreateAccount />} />
             </Routes>
           </PomodoroContext.Provider>
         </BrowserRouter>
