@@ -27,7 +27,7 @@ function DropdownMenuOption({ values, valueDefault, img }: DropdownMenuProps) {
       <DropdownMenuContent className="w-52 h-[18rem]">
         <DropdownMenuSeparator />
         {values.map((item) => (
-          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+          <DropdownMenuRadioGroup key={item.length + 1} value={position} onValueChange={setPosition}>
             <DropdownMenuRadioItem
               className="text-[1.8rem] text-[gray]"
               value={item}

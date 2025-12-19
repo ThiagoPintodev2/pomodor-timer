@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Header from "./assets/componentes/header/Index";
 import Timer from "./assets/componentes/timer/Index";

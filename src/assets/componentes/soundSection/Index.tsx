@@ -11,7 +11,7 @@ function SoundeSection() {
   const [sliderTickingSound, setSliderTickingSound] = useState<number[]>([50]);
 
   return (
-    <div className="flex flex-col px-[1rem] pt-[1.5rem] w-[40rem] m-auto bg-[#FFF]">
+    <div className={`flex flex-col px-[1rem] pt-[1.5rem] w-[40rem] m-auto max-[435px]:w-[90vw]`}>
       <div>
         <SectionTitle img={<FaVolumeUp />} value={"SOUND"} />
         <div className="flex items-center justify-between">
@@ -55,7 +55,7 @@ function SoundeSection() {
             step={1}
           />
         </div>
-        <div className="w-[38rem] bg-gray-200 h-[0.1rem] mt-[2rem]"></div>
+        <div className="w-[38rem] bg-gray-200 h-[0.1rem] mt-[2rem] max-[435px]:w-[85vw]"></div>
       </div>
     </div>
   );
