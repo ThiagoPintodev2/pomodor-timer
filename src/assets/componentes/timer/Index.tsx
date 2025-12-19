@@ -113,7 +113,6 @@ function Timer() {
     if (completed) {
       return <span>00:00</span>;
     }
-    pomodoroContext?.setProgress(minutes * 60 + seconds);
     return (
       <span>
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
@@ -194,6 +193,9 @@ function Timer() {
           }
         >
           <Countdown
+            onTick={({ minutes, seconds }) => {
+              pomodoroContext?.setProgress(minutes * 60 + seconds);
+            }}
             onComplete={() =>
               handleCategoryChange({
                 nextCategory: undefined,
