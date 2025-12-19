@@ -12,18 +12,23 @@ import CreateAccount from "./pages/createAccount/Index";
 
 function App() {
   const [titleTimer, setTitleTimer] = useState<string>("Pomodoro");
-  const [progress, setProgress] = useState<number>(0);
   const [themes, setThemes] = useState<ThemeInterface>({
     pomodoro: "#4a9ef2",
     shortBreak: "green",
     longBreak: "blue",
   });
-  const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>({
+  const defaultValuesInputTimer: ValueInput = {
     valueIntervalInput: 2,
     pomodoroInput: 0.1,
     shortBreakInput: 0.1,
     longBreakInput: 0.1,
-  });
+  };
+  const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>(
+    defaultValuesInputTimer
+  );
+  const [progress, setProgress] = useState<number>(
+    defaultValuesInputTimer.pomodoroInput * 60
+  );
 
   return (
     <>
