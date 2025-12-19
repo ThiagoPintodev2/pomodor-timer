@@ -10,13 +10,13 @@ import ShortBreakTheme from "../shortBreakThemeSection/Index";
 function ThemeSection() {
 
   return (
-    <div className="flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF] rounded-b-[1.1rem]">
+    <div className={`flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF] rounded-b-[1.1rem] max-[435px]:w-[90vw]`}>
       <div>
         <div className="flex justify-items-start">
           <SectionTitle img={<IoColorPalette />} value={"THEME"} />
         </div>
-        <div className="flex items-center">
-          <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <div>
             <DefaultTitle value={"Color Themes"} />
           </div>
           <div className="flex gap-4">
@@ -26,7 +26,7 @@ function ThemeSection() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between my-[2.5rem] ">
+      <div className="flex items-center justify-between my-[2.5rem]">
         <DefaultTitle value={"Hour Format"} />
         <DropdownMenuOption
           values={["24-hour", "12-hour"]}

@@ -38,7 +38,7 @@ function CreateAccount() {
 
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] items-center justify-center">
-      <Card className="flex flex-col justify-baseline w-[39rem] h-[50rem] bg-white">
+      <Card className="flex flex-col justify-baseline w-[39rem] h-[50rem] bg-white max-[410px]:w-[90vw] max-[320px]:h-[58vh]">
         <CardHeader>
           <CardTitle className="text-[2.8rem] text-center">
             Cadastro de Usuário

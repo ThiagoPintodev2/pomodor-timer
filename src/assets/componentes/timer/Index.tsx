@@ -10,7 +10,6 @@ import type { Count } from "../countPomodoro/countPomodoro";
 import CountShortBreak from "../countShortBreak";
 import CountLongBreak from "../countLongBreak/Index";
 
-
 function Timer() {
   const pomodoroContext = useContext(PomodoroContext);
   const [category, setCategory] = useState<
@@ -23,6 +22,7 @@ function Timer() {
     countShortBreak: 1,
     countLongBreak: 1,
   });
+  const [width, setWidth] = useState(window.innerWidth);
 
   const pomodoroMinutes =
     (pomodoroContext?.valuesInputTimer.pomodoroInput || 0) * 60 * 1000;
@@ -113,7 +113,6 @@ function Timer() {
     if (completed) {
       return <span>00:00</span>;
     }
-
     return (
       <span>
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
@@ -127,27 +126,43 @@ function Timer() {
     pomodoroContext?.setProgress(duration / 1000);
   }, [pomodoroMinutes, shortMinutes, restMinutes]);
 
+  window.onresize = () => {
+    setWidth(window.innerWidth);
+  };
+
   return (
     <div>
-      <div className="flex flex-col text-[#FFF] te w-[48rem] h-[31.2rem] bg-[rgba(255,255,255,0.2)] rounded-2xl self-center mt-[5rem]">
-        <ButtonGroup className="flex justify-around w-[100%] px-[5rem] pt-[3rem]">
+      <div
+        className={`flex flex-col text-[#FFF] w-[100%] h-[31.2rem]
+          bg-[rgba(255,255,255,0.2)] rounded-2xl self-center 
+          mt-[5rem] max-[500px]:w-[90vw] max-[370px]:h-[88vw]`}
+      >
+        <ButtonGroup
+          className={
+            width <= 400
+              ? "flex justify-center w-[100%] pt-[3rem]"
+              : "flex justify-center w-[100%] px-[5rem] pt-[3rem]"
+          }
+        >
+          {
+            <Btn
+              className={`text-[1.6rem] p-[1.5rem] cursor-pointer text-3xl 
+                  w-[12rem] border-0 bg-0 shadow-none hover:bg-none 
+                  max-[500px]:w-[22vw] max-[485px]:text-2xl`}
+              value={width <= 400 ? "Pomo" : "Pomodoro"}
+              onClick={() => handleCategoryChange({ nextCategory: "Pomodoro" })}
+              style={{
+                backgroundColor:
+                  category === "Pomodoro" ? "rgba(0,0,0,0.2)" : "transparent",
+                fontWeight: category === "Pomodoro" ? "bold" : "normal",
+              }}
+            />
+          }
           <Btn
-            className={
-              "text-[1.6rem] p-[1.5rem] cursor-pointer text-3xl border-0 bg-0 shadow-none hover:bg-none"
-            }
-            value={"Pomodoro"}
-            onClick={() => handleCategoryChange({ nextCategory: "Pomodoro" })}
-            style={{
-              backgroundColor:
-                category === "Pomodoro" ? "rgba(0,0,0,0.2)" : "transparent",
-              fontWeight: category === "Pomodoro" ? "bold" : "normal",
-            }}
-          />
-          <Btn
-            className={
-              "text-[1.6rem] p-[1.5rem] cursor-pointer text-3xl  border-0 bg-0 shadow-none"
-            }
-            value={"Short break"}
+            className={`text-[1.6rem] p-[1.5rem] cursor-pointer 
+              text-3xl w-[12rem] border-0 bg-0 
+              max-[500px]:w-[22vw] shadow-none max-[485px]:text-2xl`}
+            value={width <= 400 ? "Short" : "Short break"}
             onClick={() =>
               handleCategoryChange({ nextCategory: "Short break" })
             }
@@ -158,10 +173,10 @@ function Timer() {
             }}
           />
           <Btn
-            className={
-              "text-[1.6rem] p-[1.5rem] cursor-pointer text-3xl  border-0 bg-0 shadow-none"
-            }
-            value={"Long break"}
+            className={`text-[1.6rem] p-[1.5rem] cursor-pointer 
+              text-3xl w-[12rem] border-0 bg-0 shadow-none 
+              max-[500px]:w-[22vw] max-[485px]:text-2xl`}
+            value={width <= 400 ? "Long" : "Long break"}
             onClick={() => handleCategoryChange({ nextCategory: "Long break" })}
             style={{
               backgroundColor:
@@ -170,7 +185,13 @@ function Timer() {
             }}
           />
         </ButtonGroup>
-        <div className="text-[12rem] text-center font-bold font text-[#FFF]">
+        <div
+          className={
+            width <= 400
+              ? "text-[30vw] text-center font-bold font text-[#FFF]"
+              : "text-[12rem] text-center font-bold font text-[#FFF]"
+          }
+        >
           <Countdown
             onTick={({ minutes, seconds }) => {
               pomodoroContext?.setProgress(minutes * 60 + seconds);
@@ -189,7 +210,9 @@ function Timer() {
         </div>
         <div className="flex justify-center">
           <BtnAnimation
-            className="w-[16rem] h-[5rem] text-5xl bg-[#FFF] hover:bg-none cursor-pointer"
+            className={`w-[16rem] h-[5rem] text-5xl bg-[#FFF] 
+              hover:bg-none cursor-pointer max-[365px]:w-[40vw] 
+              max-[365px]:text-[8vw] max-[365px]:h-[14vw]`}
             style={{
               color:
                 pomodoroContext?.titleTimer === "Pomodoro"

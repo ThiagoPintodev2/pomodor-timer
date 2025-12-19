@@ -12,7 +12,7 @@ import {
 
 function TaskSection() {
   return (
-    <div className="flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF]">
+    <div className={`flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF] max-[435px]:w-[90vw]`}>
       <div>
         <SectionTitle img={<RiTaskFill />} value={"TASK"} />
       </div>
@@ -44,7 +44,7 @@ function TaskSection() {
         </div>
         <Switch />
       </div>
-      <div className="w-[38rem] bg-gray-200 h-[0.1rem] mt-[2rem]"></div>
+      <div className="w-[38rem] bg-gray-200 h-[0.1rem] mt-[2rem] max-[435px]:w-[85vw]"></div>
     </div>
   );
 }
