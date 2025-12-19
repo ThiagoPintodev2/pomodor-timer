@@ -112,14 +112,13 @@ function Timer() {
   const renderer = ({ minutes, seconds, completed }: CountdownRenderProps) => {
     if (completed) {
       return <span>00:00</span>;
-    } 
-    pomodoroContext?.setProgress((minutes * 60) + seconds)
-      return (
+    }
+
+    return (
       <span>
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </span>
     );
-    
   };
 
   useEffect(() => {
@@ -173,6 +172,9 @@ function Timer() {
         </ButtonGroup>
         <div className="text-[12rem] text-center font-bold font text-[#FFF]">
           <Countdown
+            onTick={({ minutes, seconds }) => {
+              pomodoroContext?.setProgress(minutes * 60 + seconds);
+            }}
             onComplete={() =>
               handleCategoryChange({
                 nextCategory: undefined,
