@@ -17,13 +17,18 @@ function App() {
     shortBreak: "green",
     longBreak: "blue",
   });
-  const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>({
+  const defaultValuesInputTimer: ValueInput = {
     valueIntervalInput: 2,
     pomodoroInput: 5,
     shortBreakInput: 0.1,
     longBreakInput: 0.1,
-  });
-  const [progress, setProgress] = useState<number>(valuesInputTimer.pomodoroInput * 60);
+  };
+  const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>(
+    defaultValuesInputTimer
+  );
+  const [progress, setProgress] = useState<number>(
+    defaultValuesInputTimer.pomodoroInput * 60
+  );
 
   return (
     <>
