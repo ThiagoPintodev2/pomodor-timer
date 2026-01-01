@@ -196,12 +196,13 @@ function Timer() {
             onTick={({ minutes, seconds }) => {
               pomodoroContext?.setProgress(minutes * 60 + seconds);
             }}
-            onComplete={() =>
+            onComplete={() => {
+              pomodoroContext?.setProgress(0);
               handleCategoryChange({
                 nextCategory: undefined,
                 isCompleted: true,
-              })
-            }
+              });
+            }}
             ref={countdownRef}
             autoStart={false}
             date={targetDate}
