@@ -1,4 +1,4 @@
-import Btn from "@/assets/componentes/button/Index";
+import Btn from "@/componentes/button/Index";
 import { useState } from "react";
 import type { InputValuesProps } from "./createAccountType";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -6,7 +6,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
-import InputConfiguration from "@/assets/componentes/inputConfiguration/Index";
+import InputConfiguration from "@/componentes/inputConfiguration/Index";
 import { NavLink } from "react-router";
 
 function CreateAccount() {
@@ -69,19 +69,22 @@ function CreateAccount() {
             justify-center items-center rounded-l-3xl`}
           >
             <p
-              className={`text-[4rem] text-gray-600 max-[730px]:text-[3rem] max-[730px]:font-bold`}
+              className={`text-[4rem] text-gray-600 
+                max-[730px]:text-[3rem] max-[730px]:font-bold`}
             >
               Welcome
             </p>
             <p
-              className={`text-[2.2rem] mb-[4rem] text-gray-600 text-center max-[730px]:text-[2.0rem]`}
+              className={`text-[2.2rem] mb-[4rem] text-gray-600 
+                text-center max-[730px]:text-[2.0rem]`}
             >
               Access your account
             </p>
             <NavLink to="/signin">
               <Btn
                 className={`w-[12rem] h-[4rem] text-[1.4rem] cursor-pointer
-             text-gray-600 border-2 hover:bg-gray-200 border-gray-500 shadow-xl max-[730px]:w-[12vw]`}
+             text-gray-600 border-2 hover:bg-gray-200 
+             border-gray-500 shadow-xl max-[730px]:w-[12vw]`}
                 value="Sign in"
               />
             </NavLink>
@@ -89,7 +92,8 @@ function CreateAccount() {
         )}
         <div
           className={`flex flex-col w-[100vw] bg-[#FFF] h-[100%] 
-            justify-center items-center gap-[4rem] rounded-r-xl max-[660px]:rounded-l-xl`}
+            justify-center items-center gap-[4rem] 
+            rounded-r-xl max-[660px]:rounded-l-xl`}
         >
           {width <= 660 && (
             <div
@@ -97,12 +101,14 @@ function CreateAccount() {
             justify-center items-center rounded-l-3xl max-[660px]:mb-[-6rem]`}
             >
               <p
-                className={`text-[4rem] text-gray-600 max-[730px]:text-[3rem] max-[730px]:font-bold`}
+                className={`text-[4rem] text-gray-600 
+                  max-[730px]:text-[3rem] max-[730px]:font-bold`}
               >
                 Welcome
               </p>
               <p
-                className={`text-[2.2rem] mb-[1rem] text-gray-600 text-center max-[730px]:text-[2.0rem]`}
+                className={`text-[2.2rem] mb-[1rem] text-gray-600 
+                  text-center max-[730px]:text-[2.0rem]`}
               >
                 Access your account OR
               </p>
@@ -116,7 +122,9 @@ function CreateAccount() {
               </NavLink>
             </div>
           )}
-          <p className={`text-[4rem] text-gray-600 max-[400px]:text-5xl`}>Create account</p>
+          <p className={`text-[4rem] text-gray-600 max-[400px]:text-5xl`}>
+            Create account
+          </p>
           <form
             onSubmit={handleSubmit}
             action=""

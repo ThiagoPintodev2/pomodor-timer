@@ -2,8 +2,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import Countdown, { type CountdownRenderProps } from "react-countdown";
 import Btn from "../button/Index";
-import { ButtonGroup } from "../../../components/ui/button-group";
-import BtnAnimation from "@/assets/componentes/btnAnimation/Index";
+import { ButtonGroup } from "@/components/ui/button-group";
+import BtnAnimation from "@/componentes/btnAnimation/Index";
 import { PomodoroContext } from "@/contexts/pomodoroContext/PomodoroContext";
 import CountPomodoro from "../countPomodoro/Index";
 import type { Count } from "../countPomodoro/countPomodoro";
