@@ -4,22 +4,46 @@ import { FaVolumeUp } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
 import DropdownMenuOption from "../dropdownMenuOpiton/Index";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import alarmDigital from "@/assets/media/alarm-digital.mp3";
+import alarmKitchen from "@/assets/media/alarm-kitchen.mp3";
+import type { alarmTypes } from "./soundSection";
 
 function SoundeSection() {
   const [sliderAlarmSound, setSliderAlarmSound] = useState<number[]>([50]);
   const [sliderTickingSound, setSliderTickingSound] = useState<number[]>([50]);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const alarms = ["Digital", "Kitchen"];
+  const [alarmType, setAlarmType] = useState<alarmTypes>("Digital");
+
+  const onAlarmTypeChange = (type: alarmTypes) => {
+    setAlarmType(type);
+    if (audioRef.current) {
+      if (type === "Digital") {
+        audioRef.current.src = alarmDigital;
+      } else if (type === "Kitchen") {
+        audioRef.current.src = alarmKitchen;
+      }
+      audioRef.current.load();
+      audioRef.current.volume = sliderAlarmSound[0] / 100;
+      audioRef.current.play();
+    }
+  };
 
   return (
-    <div className={`flex flex-col px-[1rem] pt-[1.5rem] w-[40rem] m-auto max-[435px]:w-[90vw]`}>
+    <div
+      className={`flex flex-col px-[1rem] pt-[1.5rem] w-[40rem] m-auto max-[435px]:w-[90vw]`}
+    >
       <div>
         <SectionTitle img={<FaVolumeUp />} value={"SOUND"} />
         <div className="flex items-center justify-between">
           <DefaultTitle value={"Alarm Sound"} />
           <DropdownMenuOption
             img={<BiSolidDownArrow />}
-            values={["Bell", "Bird", "Digital", "Kitchen", "Wood"]}
-            valueDefault={"Bell"}
+            values={alarms}
+            valueDefault={alarmType}
+            onChange={onAlarmTypeChange}
+            alarms={alarms}
           />
         </div>
         <div className="flex justify-end my-[2.5rem] items-center">
@@ -34,6 +58,9 @@ function SoundeSection() {
             step={1}
           />
         </div>
+        <audio ref={audioRef} preload="auto">
+          <source src={alarmDigital} type="audio/mpeg" />
+        </audio>
         <SectionTitle img={<FaVolumeUp />} value={"SOUND"} />
         <div className="flex items-center justify-between">
           <DefaultTitle value={"Ticking Sound"} />
@@ -60,5 +87,4 @@ function SoundeSection() {
     </div>
   );
 }
-
 export default SoundeSection;

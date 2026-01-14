@@ -9,9 +9,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { DropdownMenuProps } from "./dropdownMenuOption";
 import { useState } from "react";
+import type { alarmTypes } from "../soundSection/soundSection";
 
-function DropdownMenuOption({ values, valueDefault, img }: DropdownMenuProps) {
+function DropdownMenuOption({
+  values,
+  valueDefault,
+  img,
+  onChange,
+  alarms,
+}: DropdownMenuProps) {
   const [position, setPosition] = useState(valueDefault);
+  const onValueChange = (value: string) => {
+    setPosition(value);
+    if (onChange && alarms?.includes(value)) {
+      onChange(value as alarmTypes);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -27,11 +40,15 @@ function DropdownMenuOption({ values, valueDefault, img }: DropdownMenuProps) {
       <DropdownMenuContent className="w-52 h-[18rem]">
         <DropdownMenuSeparator />
         {values.map((item) => (
-          <DropdownMenuRadioGroup key={item.length + 1} value={position} onValueChange={setPosition}>
+          <DropdownMenuRadioGroup
+            key={item.length + 1}
+            value={position}
+            onValueChange={onValueChange}
+          >
             <DropdownMenuRadioItem
               className="text-[1.8rem] text-[gray]"
               value={item}
-              >
+            >
               {item}
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
