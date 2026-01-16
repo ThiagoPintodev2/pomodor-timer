@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import {  type VariantProps } from "class-variance-authority"
-import buttonGroupVariants from "@/componentes/btnGroupHelper"
+import buttonGroupVariants from "@/components/ui/btnGroupHelper"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 

@@ -13,7 +13,7 @@ export interface ValueInput {
   valueIntervalInput: number;
   pomodoroInput: number;
   shortBreakInput: number;
-  longBreakInput: number;
+  longBreakInput: number
 }
 
 export type PomodoroContextProps = {
@@ -25,4 +25,6 @@ export type PomodoroContextProps = {
   setTitleTimer: (s: string) => void;
   valuesInputTimer: ValueInput;
   setValuesInputTimer: (n: ValueInput) => void;
+  alarmType: string,
+   setAlarmType: (s: string) => void
 };

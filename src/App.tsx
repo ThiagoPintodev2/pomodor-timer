@@ -19,9 +19,9 @@ function App() {
   });
   const defaultValuesInputTimer: ValueInput = {
     valueIntervalInput: 2,
-    pomodoroInput: 5,
+    pomodoroInput: 0.1,
     shortBreakInput: 0.1,
-    longBreakInput: 0.1,
+    longBreakInput: 0.1
   };
   const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>(
     defaultValuesInputTimer
@@ -29,6 +29,8 @@ function App() {
   const [progress, setProgress] = useState<number>(
     defaultValuesInputTimer.pomodoroInput * 60
   );
+  
+    const [alarmType, setAlarmType] = useState<string>("Digital");
 
   return (
     <>
@@ -54,6 +56,8 @@ function App() {
               setTitleTimer,
               valuesInputTimer,
               setValuesInputTimer,
+              alarmType, 
+              setAlarmType
             }}
           >
             <Routes>

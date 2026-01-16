@@ -39,9 +39,9 @@ function DropdownMenuOption({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52 h-[18rem]">
         <DropdownMenuSeparator />
-        {values.map((item) => (
+        {values.map((item, index) => (
           <DropdownMenuRadioGroup
-            key={item.length + 1}
+            key={index}
             value={position}
             onValueChange={onValueChange}
           >

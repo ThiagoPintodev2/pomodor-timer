@@ -9,6 +9,8 @@ import CountPomodoro from "../countPomodoro/Index";
 import type { Count } from "../countPomodoro/countPomodoro";
 import CountShortBreak from "../countShortBreak";
 import CountLongBreak from "../countLongBreak/Index";
+import alarmDigital from "@/assets/media/alarm-digital.mp3";
+import alarmKitchen from "@/assets/media/alarm-kitchen.mp3";
 
 function Timer() {
   const pomodoroContext = useContext(PomodoroContext);
@@ -21,6 +23,11 @@ function Timer() {
     countPomodoro: 1,
     countShortBreak: 1,
     countLongBreak: 1,
+  });
+  const alarmTimer = useRef({
+    pomodoroAlarm: false,
+    shortBreakAlarm: false,
+    longBreakAlarm: false,
   });
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -54,12 +61,14 @@ function Timer() {
     if (nextCategory) {
       newCategory = nextCategory;
     } else if (category === "Pomodoro" && isCompleted === true) {
+      alarmTimer.current.pomodoroAlarm = true;
       newCategory = "Short break";
       setCount({
         ...count,
         countPomodoro: count.countPomodoro + 1,
       });
     } else if (category === "Short break") {
+      alarmTimer.current.shortBreakAlarm = true;
       newCategory = "Pomodoro";
       setCount({
         ...count,
@@ -80,6 +89,7 @@ function Timer() {
       });
     }
     if (category === "Long break" && isCompleted === true) {
+      alarmTimer.current.longBreakAlarm = true;
       setCount({
         ...count,
         countLongBreak: count.countLongBreak + 1,
@@ -124,7 +134,31 @@ function Timer() {
     const duration = getDuration(category);
     setTargetDate(Date.now() + duration);
     pomodoroContext?.setProgress(duration / 1000);
-  }, [pomodoroMinutes, shortMinutes, restMinutes]);
+
+    if (
+      alarmTimer.current.pomodoroAlarm === true ||
+      alarmTimer.current.shortBreakAlarm === true ||
+      alarmTimer.current.longBreakAlarm === true
+    ) {
+      if (pomodoroContext?.alarmType === "Kitchen") {
+        const audio = new Audio(alarmKitchen);
+        audio.play();
+      } else {
+        const audio = new Audio(alarmDigital);
+        audio.play();
+      }
+      alarmTimer.current.pomodoroAlarm = false;
+      alarmTimer.current.shortBreakAlarm = false;
+      alarmTimer.current.longBreakAlarm = false;
+    }
+  }, [
+    pomodoroMinutes,
+    shortMinutes,
+    restMinutes,
+    alarmTimer.current.pomodoroAlarm,
+    alarmTimer.current.shortBreakAlarm,
+    alarmTimer.current.longBreakAlarm,
+  ]);
 
   window.onresize = () => {
     setWidth(window.innerWidth);

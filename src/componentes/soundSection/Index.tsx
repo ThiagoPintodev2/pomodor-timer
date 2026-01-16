@@ -4,20 +4,21 @@ import { FaVolumeUp } from "react-icons/fa";
 import { BiSolidDownArrow } from "react-icons/bi";
 import DropdownMenuOption from "../dropdownMenuOpiton/Index";
 import { Slider } from "@/components/ui/slider";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import alarmDigital from "@/assets/media/alarm-digital.mp3";
 import alarmKitchen from "@/assets/media/alarm-kitchen.mp3";
 import type { alarmTypes } from "./soundSection";
+import { PomodoroContext } from "@/contexts/pomodoroContext/PomodoroContext";
 
 function SoundeSection() {
+  const pomodoroContext = useContext(PomodoroContext)
   const [sliderAlarmSound, setSliderAlarmSound] = useState<number[]>([50]);
   const [sliderTickingSound, setSliderTickingSound] = useState<number[]>([50]);
   const audioRef = useRef<HTMLAudioElement>(null);
   const alarms = ["Digital", "Kitchen"];
-  const [alarmType, setAlarmType] = useState<alarmTypes>("Digital");
 
   const onAlarmTypeChange = (type: alarmTypes) => {
-    setAlarmType(type);
+    pomodoroContext?.setAlarmType(type);
     if (audioRef.current) {
       if (type === "Digital") {
         audioRef.current.src = alarmDigital;
@@ -41,7 +42,7 @@ function SoundeSection() {
           <DropdownMenuOption
             img={<BiSolidDownArrow />}
             values={alarms}
-            valueDefault={alarmType}
+            valueDefault={pomodoroContext?.alarmType}
             onChange={onAlarmTypeChange}
             alarms={alarms}
           />
