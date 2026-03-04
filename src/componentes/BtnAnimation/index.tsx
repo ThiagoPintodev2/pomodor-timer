@@ -1,5 +1,5 @@
 import { RippleButton } from '@/components/ui/shadcn-io/ripple-button';
-import type { BtnAnimationProps } from './btnAnimationProps';
+import type { BtnAnimationProps } from '../BtnAnimation/btnAnimationProps';
  
 export const BtnAnimation = ({style, className, value, onClick}: BtnAnimationProps) => {
   return (

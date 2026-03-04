@@ -1,4 +1,4 @@
-import type { SectionTitleProps } from "./sectionTitleProps"
+import type { SectionTitleProps } from "../SectionTitle/sectionTitleProps"
 
 function SectionTitle({ img, value }: SectionTitleProps) {
   return (

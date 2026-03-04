@@ -7,7 +7,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { DropdownMenuProps } from "./dropdownMenuOption";
+import type { DropdownMenuProps } from "../DropdownMenuOpiton/dropdownMenuOption";
 import { useState } from "react";
 import type { alarmTypes } from "../SoundSection/soundSection";
 

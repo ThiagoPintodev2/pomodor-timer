@@ -3,10 +3,9 @@ import ThemeSection from "../ThemeSection/index";
 import TimerSection from "../TimerSection/index";
 
 function WindowSetting() {
-
   return (
     <span>
-      <div className={`flex flex-col items-center}`}>
+      <div className={`flex flex-col items-center justify-center}`}>
         <div className="text-[2rem] text-center py-6 text-gray-500">
           SETTING
         </div>

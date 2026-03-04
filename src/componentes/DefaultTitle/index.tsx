@@ -1,4 +1,4 @@
-import type { DefaultTitleProps } from "./defaultTtileProps"
+import type { DefaultTitleProps } from "../DefaultTitle/defaultTtileProps"
 
 function DefaultTitle({ value }: DefaultTitleProps) {
   return (

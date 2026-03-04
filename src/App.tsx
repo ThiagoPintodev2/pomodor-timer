@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Header from "./componentes/Header/index";
 import Timer from "./componentes/Timer/index";
@@ -9,28 +9,31 @@ import type {
 } from "./contexts/pomodoroContext/PomodoroContextProps";
 import LoginArea from "./pages/loginArea/Index";
 import CreateAccount from "./pages/createAccount/Index";
+import {
+  getStoredPomodoroState,
+  setStoredPomodoroState,
+} from "./utils/pomodoroStorage";
 
 function App() {
-  const [titleTimer, setTitleTimer] = useState<string>("Pomodoro");
-  const [themes, setThemes] = useState<ThemeInterface>({
-    pomodoro: "#4a9ef2",
-    shortBreak: "green",
-    longBreak: "blue",
-  });
-  const defaultValuesInputTimer: ValueInput = {
-    valueIntervalInput: 2,
-    pomodoroInput: 0.1,
-    shortBreakInput: 0.1,
-    longBreakInput: 0.1
-  };
+  const stored = getStoredPomodoroState();
+
+  const [titleTimer, setTitleTimer] = useState<string>(stored.titleTimer);
+  const [themes, setThemes] = useState<ThemeInterface>(stored.themes);
   const [valuesInputTimer, setValuesInputTimer] = useState<ValueInput>(
-    defaultValuesInputTimer
+    stored.valuesInputTimer
   );
-  const [progress, setProgress] = useState<number>(
-    defaultValuesInputTimer.pomodoroInput * 60
-  );
-  
-    const [alarmType, setAlarmType] = useState<string>("Digital");
+  const [progress, setProgress] = useState<number>(stored.progress);
+  const [alarmType, setAlarmType] = useState<string>(stored.alarmType);
+
+  useEffect(() => {
+    setStoredPomodoroState({
+      titleTimer,
+      themes,
+      valuesInputTimer,
+      progress,
+      alarmType,
+    });
+  }, [titleTimer, themes, valuesInputTimer, progress, alarmType]);
 
   return (
     <>

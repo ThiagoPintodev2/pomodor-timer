@@ -26,5 +26,5 @@ export type PomodoroContextProps = {
   valuesInputTimer: ValueInput;
   setValuesInputTimer: (n: ValueInput) => void;
   alarmType: string,
-   setAlarmType: (s: string) => void
+  setAlarmType: (s: string) => void
 };

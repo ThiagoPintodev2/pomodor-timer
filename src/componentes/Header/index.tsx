@@ -38,30 +38,32 @@ function Header() {
   useEffect(() => {
     const timer = setTimeout(
       () => pomodoroContext?.setProgress(pomodoroContext.progress),
-      500
+      500,
     );
     return () => clearTimeout(timer);
   }, []);
-  
+
   const totalSeconds = totalMinutos;
   const remainingSeconds = pomodoroContext?.progress ?? totalSeconds;
   const progressPercent =
-  totalSeconds > 0
-  ? Math.min(
-    100,
-    Math.max(0, ((totalSeconds - remainingSeconds) / totalSeconds) * 100)
-  )
-  : 0;
-  
- window.addEventListener("resize", () => {
-  setWidth(window.innerWidth);
-});
+    totalSeconds > 0
+      ? Math.min(
+          100,
+          Math.max(0, ((totalSeconds - remainingSeconds) / totalSeconds) * 100),
+        )
+      : 0;
+
+  window.addEventListener("resize", () => {
+    setWidth(window.innerWidth);
+  });
   return (
     <>
       <div className={`flex text-[#FFF] gap-[1rem] mt-[1rem] items-center`}>
-        {
-          width <= 360 ? <CiTimer size={30} className={`pr-[20vw]`} /> : <h1 className={`mr-[10vw] text-[2rem] font-bold`}>ThiagoPomo</h1>
-        }
+        {width <= 360 ? (
+          <CiTimer size={30} className={`pr-[20vw]`} />
+        ) : (
+          <h1 className={`mr-[10vw] text-[2rem] font-bold`}>PomoFocus</h1>
+        )}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
             asChild
@@ -84,7 +86,7 @@ function Header() {
           <DialogContent
             className="
                 overflow-y-auto scroll-area
-                h-[92vh]
+                h-[80vh]
                 rounded-2xl max-[435px]:w-[90vw] max-[450px]:overflow-x-hidden"
           >
             <DialogHeader>
@@ -97,7 +99,7 @@ function Header() {
             </DialogHeader>
             <div className="flex justify-end mt-4">
               <Btn
-                className={`w-[8rem] h-[4rem] my-[3rem] mr-[2rem] 
+                className={`w-[8rem] h-[4rem] mr-[2rem] 
                   hover:bg-gray-500 rounded-2xl 
                   bg-gray-400 text-[#FFF] 
                   cursor-pointer text-[1.5rem]`}

@@ -13,7 +13,7 @@ import { LuArrowLeftFromLine } from "react-icons/lu";
 function LoginArea() {
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] items-center justify-center gap-6">
-      <h1 className="text-[2rem] font-bold text-white">ThiagoPomoFocus</h1>
+      <h1 className="text-[2rem] font-bold text-white">PomoFocus</h1>
       <Card className="flex flex-col justify-around w-[36rem] h-[36rem] bg-white max-[410px]:w-[90vw]">
         <CardHeader>
           <div className="text-[2.8rem] font-medium text-center">

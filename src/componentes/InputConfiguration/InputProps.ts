@@ -7,6 +7,7 @@ export type InputProps = {
     className?: string,
     label?: string,
     placeholder: string,
+    value?: string | number,
     onChange?: ChangeEventHandler<HTMLInputElement>,
     onClick?: React.MouseEventHandler,
 }

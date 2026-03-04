@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
-import type { InputProps } from "./InputProps";
+import type { InputProps } from "../InputConfiguration/InputProps";
 
-function InputConfiguration({ type, icon, className, label, placeholder, iconPassword, onChange, onClick }: InputProps) {
+function InputConfiguration({ type, icon, className, label, placeholder, value, iconPassword, onChange, onClick }: InputProps) {
   return (
     <div>
       <label className="text-[1.4rem] font-medium text-[gray]">
@@ -10,7 +10,7 @@ function InputConfiguration({ type, icon, className, label, placeholder, iconPas
           <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none`}>
             {icon}
           </span>
-          <Input type={type} className={className} placeholder={placeholder} onChange={onChange} />
+          <Input type={type} className={className} placeholder={placeholder} value={value} onChange={onChange} />
           <button onClick={onClick}  className={`absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer`}>
             {iconPassword}
           </button>

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 
-import { type BtnProps } from './type'
+import { type BtnProps } from '../Button/type'
 
 
 function Btn({ onClick, className, value, img, style}: BtnProps) {

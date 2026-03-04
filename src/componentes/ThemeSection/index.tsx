@@ -1,6 +1,4 @@
-import { BiSolidDownArrow } from "react-icons/bi";
 import DefaultTitle from "../DefaultTitle/index";
-import DropdownMenuOption from "../DropdownMenuOpiton/index";
 import SectionTitle from "../SectionTitle";
 import { IoColorPalette } from "react-icons/io5";
 import PomodoroThemeSection from "../PomodoroThemeSection/index";
@@ -8,9 +6,10 @@ import LongbreakThemeSection from "../LongBreakThemeSection/index";
 import ShortBreakTheme from "../ShortBreakThemeSection/index";
 
 function ThemeSection() {
-
   return (
-    <div className={`flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF] rounded-b-[1.1rem] max-[435px]:w-[90vw]`}>
+    <div
+      className={`flex flex-col px-[1rem] w-[40rem] m-auto bg-[#FFF] rounded-b-[1.1rem] max-[435px]:w-[90vw]`}
+    >
       <div>
         <div className="flex justify-items-start">
           <SectionTitle img={<IoColorPalette />} value={"THEME"} />
@@ -26,14 +25,7 @@ function ThemeSection() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between my-[2.5rem]">
-        <DefaultTitle value={"Hour Format"} />
-        <DropdownMenuOption
-          values={["24-hour", "12-hour"]}
-          valueDefault={"24-hour"}
-          img={<BiSolidDownArrow />}
-        />
-      </div>
+      <div className="flex items-center justify-between my-[2.5rem]"></div>
     </div>
   );
 }
