@@ -1,73 +1,104 @@
-# React + TypeScript + Vite
+* Pomodoro App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web baseada na técnica Pomodoro, desenvolvida para melhorar foco, produtividade e organização do tempo.
+Projeto desenvolvido com foco em prática de React, organização de estado e componentização.
 
-Currently, two official plugins are available:
+Tecnologias Utilizadas:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- HTML5
+- JavaScript
+- TypeScript
+- React
+- TailwindCSS
+- shadcn/ui
 
-## React Compiler
+Funcionalidades:
+Contador regressivo para:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Foco
+- Pausa Curta
+- Pausa Longa
+- Alternância automática entre os ciclos
 
-## Expanding the ESLint configuration
+Aba "Settings":
+Permite personalizar:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Tempo de foco
+- Tempo de pausa curta
+- Tempo de pausa longa
+- Intervalos entre ciclos
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Temas Dinâmicos:
+Cada modo possui um tema de cor diferente, proporcionando uma experiência visual intuitiva:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Foco
+- Pausa curta
+- Pausa longa
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Sistema de Alarme:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 2 opções de sons para o despertador
+- Controle de volume ajustável
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Autenticação (Visual)
+Inclui:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Tela de Login
+- Tela de Criação de Conta
+
+Funcionalidade visual no momento (integração com backend em breve):
+Validações no Formulário de Cadastro:
+
+Campos:
+
+- Nome
+- E-mail
+- Senha
+- Confirmar Senha
+
+Validações implementadas:
+
+- Nome: obrigatório
+- E-mail: formato válido
+- Senha: obrigatória
+- Confirmar senha: deve coincidir com a senha
+
+Como Rodar o Projeto?
+
+# Instalar dependências
+npm install
+
+# Rodar em ambiente de desenvolvimento
+npm run dev
+
+# Gerar build de produção
+npm run build
+
+Deploy:
+
+- Projeto publicado via Netlify com deploy automático conectado ao GitHub.
+
+
+Conceitos Praticados:
+
+- Componentização no React
+- Gerenciamento de estado
+- Manipulação de tempo com JavaScript
+- Validação de formulários
+- Estilização com TailwindCSS
+- Organização de layout com shadcn/ui
+- Estruturação de projeto com TypeScript
+
+Melhorias Futuras:
+
+- Integração com backend (autenticação real)
+- Persistência de dados no banco de dados
+- Histórico de ciclos concluídos
+
+
+Autor
+
+Thiago Pinto
+Desenvolvedor Front-End Júnior em transição para Fullstack.
+
+Se este projeto te ajudou ou serviu como inspiração, fique à vontade para contribuir ou deixar uma ⭐ no repositório.
