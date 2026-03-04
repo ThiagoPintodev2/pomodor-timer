@@ -1,7 +1,7 @@
 import {  useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Header from "./componentes/header/Index";
-import Timer from "./componentes/timer/Index";
+import Header from "./componentes/Header/index";
+import Timer from "./componentes/Timer/index";
 import { PomodoroContext } from "./contexts/pomodoroContext/PomodoroContext";
 import type {
   ThemeInterface,

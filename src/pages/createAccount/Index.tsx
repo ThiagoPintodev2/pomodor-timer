@@ -1,4 +1,4 @@
-import Btn from "@/componentes/button/Index";
+import Btn from "@/componentes/Button/index";
 import { useState } from "react";
 import type { InputValuesProps } from "./createAccountType";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -6,7 +6,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
-import InputConfiguration from "@/componentes/inputConfiguration/Index";
+import InputConfiguration from "@/componentes/InputConfiguration/index";
 import { NavLink } from "react-router";
 
 function CreateAccount() {
