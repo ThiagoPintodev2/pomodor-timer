@@ -35,7 +35,15 @@ function Timer() {
     shortBreakAlarm: false,
     longBreakAlarm: false,
   });
+  const unlockedAudioRef = useRef<{
+    digital: HTMLAudioElement | null;
+    kitchen: HTMLAudioElement | null;
+  }>({ digital: null, kitchen: null });
+  const targetDateRef = useRef(0);
+  const handleCategoryChangeRef = useRef<((arg: { isCompleted?: boolean; nextCategory?: Category }) => void) | null>(null);
+  const isRunningRef = useRef(false);
   const [width, setWidth] = useState(window.innerWidth);
+  isRunningRef.current = buttonValue === "PAUSE";
 
   const pomodoroMinutes =
     (pomodoroContext?.valuesInputTimer.pomodoroInput || 0) * 60 * 1000;
@@ -110,11 +118,30 @@ function Timer() {
     pomodoroContext?.setProgress(duration / 1000);
     pomodoroContext?.setTitleTimer(newCategory);
   };
+  targetDateRef.current = targetDate;
+  handleCategoryChangeRef.current = handleCategoryChange;
+
+  const unlockAudioAndNotifications = () => {
+    if (unlockedAudioRef.current.digital) return;
+    const digital = new Audio(alarmDigital);
+    const kitchen = new Audio(alarmKitchen);
+    const playThenPause = (a: HTMLAudioElement) => {
+      a.volume = 0.01;
+      a.play().then(() => { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(() => {});
+    };
+    playThenPause(digital);
+    playThenPause(kitchen);
+    unlockedAudioRef.current = { digital, kitchen };
+    if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(() => {});
+    }
+  };
 
   const handleButtonStart = () => {
     const countdown = countdownRef.current;
     if (!countdown) return;
     if (buttonValue === "START") {
+      unlockAudioAndNotifications();
       if (countdown.isStopped() || countdown.isCompleted()) {
         setTargetDate(Date.now() + getDuration(category));
       }
@@ -152,12 +179,27 @@ function Timer() {
       alarmTimer.current.shortBreakAlarm === true ||
       alarmTimer.current.longBreakAlarm === true
     ) {
-      if (pomodoroContext?.alarmType === "Kitchen") {
-        const audio = new Audio(alarmKitchen);
-        audio.play();
+      const useKitchen = pomodoroContext?.alarmType === "Kitchen";
+      const unlocked = useKitchen
+        ? unlockedAudioRef.current.kitchen
+        : unlockedAudioRef.current.digital;
+      if (unlocked) {
+        unlocked.currentTime = 0;
+        unlocked.volume = 1;
+        unlocked.play().catch(() => {});
       } else {
-        const audio = new Audio(alarmDigital);
-        audio.play();
+        const audio = new Audio(useKitchen ? alarmKitchen : alarmDigital);
+        audio.play().catch(() => {});
+      }
+      if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification("Timer concluído!", {
+            body: "Hora de uma pausa ou de voltar ao foco.",
+            icon: "/favicon.ico",
+          });
+        } catch {
+          // ignore
+        }
       }
       alarmTimer.current.pomodoroAlarm = false;
       alarmTimer.current.shortBreakAlarm = false;
@@ -171,6 +213,16 @@ function Timer() {
     alarmTimer.current.shortBreakAlarm,
     alarmTimer.current.longBreakAlarm,
   ]);
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!isRunningRef.current || Date.now() < targetDateRef.current) return;
+      handleCategoryChangeRef.current?.({ isCompleted: true });
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
 
   window.onresize = () => {
     setWidth(window.innerWidth);
