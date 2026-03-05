@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import type { InputProps } from "./inputProps";
+import type { InputProps } from "./InputProps";
 
 function InputConfiguration({ type, icon, className, label, placeholder, value, iconPassword, onChange, onClick }: InputProps) {
   return (
