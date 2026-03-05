@@ -11,12 +11,18 @@ import CountShortBreak from "../CountShortBreak";
 import CountLongBreak from "../CountLongBreak/index";
 import alarmDigital from "@/assets/media/alarm-digital.mp3";
 import alarmKitchen from "@/assets/media/alarm-kitchen.mp3";
+import { getStoredPomodoroState } from "@/utils/pomodoroStorage";
 
 function Timer() {
   const pomodoroContext = useContext(PomodoroContext);
   const [category, setCategory] = useState<
     "Short break" | "Pomodoro" | "Long break"
-  >("Pomodoro");
+  >(() => {
+    const s = getStoredPomodoroState();
+    const t = s.titleTimer;
+    if (t === "Short break" || t === "Long break") return t;
+    return "Pomodoro";
+  });
   const countdownRef = useRef<Countdown | null>(null);
   const [buttonValue, setButtonValue] = useState<string>("START");
   const [count, setCount] = useState<Count>({
@@ -29,7 +35,16 @@ function Timer() {
     shortBreakAlarm: false,
     longBreakAlarm: false,
   });
+  /** Áudio desbloqueado no primeiro toque (Start) para tocar no celular sem nova interação */
+  const unlockedAudioRef = useRef<{
+    digital: HTMLAudioElement | null;
+    kitchen: HTMLAudioElement | null;
+  }>({ digital: null, kitchen: null });
+  const targetDateRef = useRef(0);
+  const handleCategoryChangeRef = useRef<typeof handleCategoryChange | null>(null);
+  const isRunningRef = useRef(false);
   const [width, setWidth] = useState(window.innerWidth);
+  isRunningRef.current = buttonValue === "PAUSE";
 
   const pomodoroMinutes =
     (pomodoroContext?.valuesInputTimer.pomodoroInput || 0) * 60 * 1000;
@@ -38,9 +53,10 @@ function Timer() {
   const restMinutes =
     (pomodoroContext?.valuesInputTimer.longBreakInput || 0) * 60 * 1000;
 
-  const [targetDate, setTargetDate] = useState<number>(
-    Date.now() + pomodoroMinutes
-  );
+  const [targetDate, setTargetDate] = useState<number>(() => {
+    const s = getStoredPomodoroState();
+    return Date.now() + s.progress * 1000;
+  });
 
   const getDuration = (cat: "Short break" | "Pomodoro" | "Long break") => {
     if (cat === "Pomodoro") return pomodoroMinutes;
@@ -103,11 +119,31 @@ function Timer() {
     pomodoroContext?.setProgress(duration / 1000);
     pomodoroContext?.setTitleTimer(newCategory);
   };
+  targetDateRef.current = targetDate;
+  handleCategoryChangeRef.current = handleCategoryChange;
+
+  /** Desbloqueia o áudio no primeiro gesto do usuário (obrigatório no celular) e pede permissão de notificação */
+  const unlockAudioAndNotifications = () => {
+    if (unlockedAudioRef.current.digital) return; // já desbloqueado
+    const digital = new Audio(alarmDigital);
+    const kitchen = new Audio(alarmKitchen);
+    const playThenPause = (a: HTMLAudioElement) => {
+      a.volume = 0.01;
+      a.play().then(() => { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(() => {});
+    };
+    playThenPause(digital);
+    playThenPause(kitchen);
+    unlockedAudioRef.current = { digital, kitchen };
+    if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(() => {});
+    }
+  };
 
   const handleButtonStart = () => {
     const countdown = countdownRef.current;
     if (!countdown) return;
     if (buttonValue === "START") {
+      unlockAudioAndNotifications();
       if (countdown.isStopped() || countdown.isCompleted()) {
         setTargetDate(Date.now() + getDuration(category));
       }
@@ -130,22 +166,42 @@ function Timer() {
     );
   };
 
+  const isFirstMount = useRef(true);
   useEffect(() => {
-    const duration = getDuration(category);
-    setTargetDate(Date.now() + duration);
-    pomodoroContext?.setProgress(duration / 1000);
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+    } else {
+      const duration = getDuration(category);
+      setTargetDate(Date.now() + duration);
+      pomodoroContext?.setProgress(duration / 1000);
+    }
 
     if (
       alarmTimer.current.pomodoroAlarm === true ||
       alarmTimer.current.shortBreakAlarm === true ||
       alarmTimer.current.longBreakAlarm === true
     ) {
-      if (pomodoroContext?.alarmType === "Kitchen") {
-        const audio = new Audio(alarmKitchen);
-        audio.play();
+      const useKitchen = pomodoroContext?.alarmType === "Kitchen";
+      const unlocked = useKitchen
+        ? unlockedAudioRef.current.kitchen
+        : unlockedAudioRef.current.digital;
+      if (unlocked) {
+        unlocked.currentTime = 0;
+        unlocked.volume = 1;
+        unlocked.play().catch(() => {});
       } else {
-        const audio = new Audio(alarmDigital);
-        audio.play();
+        const audio = new Audio(useKitchen ? alarmKitchen : alarmDigital);
+        audio.play().catch(() => {});
+      }
+      if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification("Timer concluído!", {
+            body: "Hora de uma pausa ou de voltar ao foco.",
+            icon: "/favicon.ico",
+          });
+        } catch {
+          // ignore
+        }
       }
       alarmTimer.current.pomodoroAlarm = false;
       alarmTimer.current.shortBreakAlarm = false;
@@ -159,6 +215,17 @@ function Timer() {
     alarmTimer.current.shortBreakAlarm,
     alarmTimer.current.longBreakAlarm,
   ]);
+
+  /** Ao voltar ao app (ex.: desbloquear celular), se o timer já terminou, dispara conclusão para tocar som e notificação */
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!isRunningRef.current || Date.now() < targetDateRef.current) return;
+      handleCategoryChangeRef.current?.({ isCompleted: true });
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
 
   window.onresize = () => {
     setWidth(window.innerWidth);
@@ -253,8 +320,8 @@ function Timer() {
                 pomodoroContext?.titleTimer === "Pomodoro"
                   ? `${pomodoroContext.themes.pomodoro}`
                   : pomodoroContext?.titleTimer === "Short break"
-                  ? `${pomodoroContext?.themes.shortBreak}`
-                  : `${pomodoroContext?.themes.longBreak}`,
+                    ? `${pomodoroContext?.themes.shortBreak}`
+                    : `${pomodoroContext?.themes.longBreak}`,
             }}
             value={buttonValue}
             onClick={handleButtonStart}
