@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import Btn from "../Button/index";
 import { Progress } from "@/components/ui/progress";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { PomodoroContext } from "@/contexts/pomodoroContext/PomodoroContext";
 
 function Header() {
@@ -36,13 +36,6 @@ function Header() {
       break;
   }
 
-  useEffect(() => {
-    const timer = setTimeout(
-      () => pomodoroContext?.setProgress(pomodoroContext.progress),
-      500,
-    );
-    return () => clearTimeout(timer);
-  }, []);
 
   const totalSeconds = totalMinutos;
   const remainingSeconds = pomodoroContext?.progress ?? totalSeconds;
